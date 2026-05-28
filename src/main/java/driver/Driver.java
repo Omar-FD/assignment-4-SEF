@@ -5,12 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Driver {
+
     enum LICENSE_TYPES {
         LIGHT,
         MEDIUM,
         HEAVY,
         PUBLIC_TRANSPORT,
     }
+
     private String driverID;
     private String driverName;
     private int experienceYears;
@@ -25,9 +27,56 @@ public class Driver {
             this.experienceYears = experienceYears;
             this.licenseType = licenseType;
             this.address = address;
-            this.birthdate = LocalDate.parse(birthdate);
+            this.birthdate = LocalDate.parse(birthdate, java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         }
     }
+
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public int getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(int experienceYears) {
+        this.experienceYears = experienceYears;
+    }
+
+    public LICENSE_TYPES getLicenseType() {
+        return licenseType;
+    }
+
+    public void setLicenseType(LICENSE_TYPES licenseType) {
+        if (this.experienceYears > 10) return;
+        this.licenseType = licenseType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        if (!checkAddress(address)) return;
+        this.address = address;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        if (!validBirthdate(birthdate.toString())) return;
+        this.birthdate = birthdate;
+    }
+
+
+    //---------------HELPER METHODS-----------------------------
+
 
     //checking all the fields
     private Boolean validFields(String driverID, String driverName, int experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
@@ -50,12 +99,12 @@ public class Driver {
         if (!firstTwo.matches("[2-9]{2}")) {
             return false;
         }
-        String middleFive = driverID.substring(2,9);
+        String middleFive = driverID.substring(2,8);
         long specialCount = middleFive.chars().filter(c -> !Character.isLetterOrDigit(c)).count();
-        if (specialCount != 2) {
+        if (specialCount < 2) {
             return false;
         }
-        String lastTwo = driverID.substring(9,11);
+        String lastTwo = driverID.substring(8,10);
         if (!lastTwo.matches("[A-Z]{2}")) {
             return false;
         }
@@ -76,6 +125,8 @@ public class Driver {
         String restOfAddress = parts[1] + " " + parts[2] + " " + parts[3] + " " + parts[4];
         return restOfAddress.matches("[A-Za-z0-9\\s]+");
     }
+
+
     //Birthday Validation
     public Boolean validBirthdate(String date) {
         String[] parts = date.split("-");
@@ -85,6 +136,20 @@ public class Driver {
         int day = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
         int year = Integer.parseInt(parts[2]);
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2021) {
+            return false;
+        }
+        return month != 2 || day <= 29;
+    }
+    public Boolean validBirthdate(LocalDate date) {
+        String stringDate = date.toString();
+        String[] parts = stringDate.split("-");
+        if (parts.length != 3) {
+            return false;
+        }
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
         if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2021) {
             return false;
         }
