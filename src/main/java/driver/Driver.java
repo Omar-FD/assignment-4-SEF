@@ -62,4 +62,18 @@ public class Driver {
         }
         this.address = restOfAddress;
     }
+
+    public void addBirthdate(String date) {
+        String[] parts = date.split("-");
+        if (parts.length != 3) {
+            return;
+        }
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2021) {
+            return;
+        }
+        this.birthdate = LocalDate.of(year, month, day);
+    }
 }

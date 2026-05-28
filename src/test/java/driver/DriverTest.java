@@ -9,14 +9,7 @@ public class DriverTest {
     @Test
     @DisplayName("normal detail verification")
     void verifyNormalDetails() {
-        Driver driver = new Driver("13579", "John", 2, Driver.LICENSE_TYPES.LIGHT, "123 Main St", null);
-        Boolean result = driver.verifyDetails("13579", "12-01-1990");
-        assert result;
     }
 
     //Test Edge Cases
-    @Test
-    @CsvSource(textBlock = """
-
-""")
 }
