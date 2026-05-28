@@ -44,4 +44,22 @@ public class Driver {
         }
         this.driverID = driverID;
     }
+
+    //Address addition && validation
+    public void addAddress(String address) {
+        String[] parts = address.split("\\|");
+        if (parts.length != 5) {
+            return;
+        }
+        //Checking if it starts with street number
+        int streetNumber = parts[0].length();
+        if (!parts[0].matches("[0-9]{" + streetNumber + "}")) {
+            return;
+        }
+        String restOfAddress = parts[1] + " " + parts[2] + " " + parts[3] + " " + parts[4];
+        if (!restOfAddress.matches("[A-Za-z0-9\\s]+")) {
+            return;
+        }
+        this.address = restOfAddress;
+    }
 }
