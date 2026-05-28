@@ -19,7 +19,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.5</version>
         <configuration>
           <includes><include>**/*Test.java</include></includes>
           <excludedGroups>integration,slow</excludedGroups>
@@ -29,7 +29,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.5.2</version>
+        <version>3.5.5</version>
         <configuration>
           <includes><include>**/*IT.java</include></includes>
           <groups>integration</groups>
