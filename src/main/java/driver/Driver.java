@@ -118,11 +118,11 @@ public class Driver {
             return false;
         }
         //Checking if it starts with street number
-        int streetNumber = parts[0].length();
-        if (!parts[0].matches("[0-9]{" + streetNumber + "}")) {
+        int streetNumber = parts[0].trim().length();
+        if (!parts[0].trim().matches("[0-9]{" + streetNumber + "}")) {
             return false;
         }
-        String restOfAddress = parts[1] + " " + parts[2] + " " + parts[3] + " " + parts[4];
+        String restOfAddress = parts[1] + parts[2] + parts[3] + parts[4];
         return restOfAddress.matches("[A-Za-z0-9\\s]+");
     }
 
