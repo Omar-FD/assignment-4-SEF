@@ -28,6 +28,8 @@ public class Driver {
             this.licenseType = licenseType;
             this.address = address;
             this.birthdate = LocalDate.parse(birthdate, java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        } else {
+            throw new IllegalArgumentException("Invalid driver details");
         }
     }
 
