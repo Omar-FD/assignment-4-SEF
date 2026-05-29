@@ -4,17 +4,16 @@ import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Driver {
-
     enum LICENSE_TYPES {
         LIGHT,
         MEDIUM,
         HEAVY,
         PUBLIC_TRANSPORT,
     }
+public class Driver {
 
-    private String driverID;
-    private String driverName;
+    private final String driverID;
+    private final String driverName;
     private int experienceYears;
     private LICENSE_TYPES licenseType;
     private String address;
@@ -25,6 +24,18 @@ public class Driver {
             this.driverID = driverID;
             this.driverName = driverName;
             this.experienceYears = experienceYears;
+            this.licenseType = licenseType;
+            this.address = address;
+            this.birthdate = LocalDate.parse(birthdate, java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        } else {
+            throw new IllegalArgumentException("Invalid driver details");
+        }
+    }
+    public Driver(String driverID, String driverName, String experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
+        if (validFields(driverID, driverName, experienceYears, licenseType, address, birthdate)) {
+            this.driverID = driverID;
+            this.driverName = driverName;
+            this.experienceYears = Integer.parseInt(experienceYears);
             this.licenseType = licenseType;
             this.address = address;
             this.birthdate = LocalDate.parse(birthdate, java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -63,7 +74,7 @@ public class Driver {
     }
 
     public void setAddress(String address) {
-        if (!checkAddress(address)) return;
+        if (!validAddress(address)) return;
         this.address = address;
     }
 
@@ -82,7 +93,13 @@ public class Driver {
 
     //checking all the fields
     private Boolean validFields(String driverID, String driverName, int experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
-        return validID(driverID) && validBirthdate(birthdate) && checkAddress(address);
+        if (driverName.isEmpty() || experienceYears < 0 || licenseType == null) return false;
+        return validID(driverID) && validBirthdate(birthdate) && validAddress(address);
+    }
+
+    private Boolean validFields(String driverID, String driverName, String experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
+        if (driverName.isEmpty() || licenseType == null) return false;
+        return validID(driverID) && validBirthdate(birthdate) && validAddress(address) && validExperience(experienceYears);
     }
 
     //checking the fields required for login
@@ -114,12 +131,13 @@ public class Driver {
     }
 
     //Address validation
-    public Boolean checkAddress(String address) {
+    public Boolean validAddress(String address) {
+        if (address.trim().isEmpty()) return false;
         String[] parts = address.split("\\|");
         if (parts.length != 5) {
             return false;
         }
-        //Checking if it starts with street number
+        //Checking if it starts with a street number
         int streetNumber = parts[0].trim().length();
         if (!parts[0].trim().matches("[0-9]{" + streetNumber + "}")) {
             return false;
@@ -128,6 +146,9 @@ public class Driver {
         return restOfAddress.matches("[A-Za-z0-9\\s]+");
     }
 
+    public Boolean validExperience(String experience) {
+        return !experience.isEmpty();
+    }
 
     //Birthday Validation
     public Boolean validBirthdate(String date) {
