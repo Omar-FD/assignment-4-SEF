@@ -47,4 +47,18 @@ public class DriverTest {
         assertEquals("Invalid driver details", exception.getMessage());
     }
 
+    @ParameterizedTest()
+    @DisplayName("Testing names during instantiation including edge cases")
+    @ValueSource(strings = {"", "   ", "Jake1", "John", "123123", "-----"})
+    void testInvalidNames(String name) {
+        if (!name.equals("John")) {
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+                Driver testDriver = new Driver("32##6785BR", name, 10, LICENSE_TYPES.HEAVY, "123 | Main St | Metropolis Downtown | Metropolis | Metropolit Country", "04-07-2002");
+            });
+            assertEquals("Invalid driver details", exception.getMessage());
+        } else {
+            Driver testDriver = new Driver("32##6785BR", name, 10, LICENSE_TYPES.HEAVY, "123 | Main St | Metropolis Downtown | Metropolis | Metropolit Country", "04-07-2002");
+            assertEquals(testDriver.getDriverName(), name);
+        }
+    }
 }

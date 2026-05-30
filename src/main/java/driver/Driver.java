@@ -93,13 +93,28 @@ public class Driver {
 
     //checking all the fields
     private Boolean validFields(String driverID, String driverName, int experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
-        if (driverName.isEmpty() || experienceYears < 0 || licenseType == null) return false;
+        if (!validName(driverName) || experienceYears < 0 || licenseType == null) return false;
         return validID(driverID) && validBirthdate(birthdate) && validAddress(address);
     }
 
     private Boolean validFields(String driverID, String driverName, String experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
-        if (driverName.isEmpty() || licenseType == null) return false;
-        return validID(driverID) && validBirthdate(birthdate) && validAddress(address) && validExperience(experienceYears);
+        if ( licenseType == null) {
+            return  false;
+        } else {
+            System.out.println("valid name");
+        };
+        return validID(driverID) && validBirthdate(birthdate) && validAddress(address) && validExperience(experienceYears) && validName(driverName);
+    }
+
+    public Boolean validName(String driverName) {
+        if (driverName.isEmpty()) return false;
+        if (driverName.trim().isEmpty()) return false;
+        for (int i = 0; i < driverName.length(); i++) {
+            if (!Character.isLetter(driverName.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //checking the fields required for login
