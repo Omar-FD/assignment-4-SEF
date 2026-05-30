@@ -1,8 +1,9 @@
 package driver;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
-    enum LICENSE_TYPES {
+enum LICENSE_TYPES {
         LIGHT,
         MEDIUM,
         HEAVY,
@@ -175,6 +176,9 @@ public class Driver {
         if (parts.length != 3) {
             return false;
         }
+        boolean allDigits = Arrays.stream(parts).allMatch(part -> !part.isEmpty() && part.chars().allMatch(Character::isDigit));
+        if (!allDigits) { return false;}
+
         int day = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
         int year = Integer.parseInt(parts[2]);

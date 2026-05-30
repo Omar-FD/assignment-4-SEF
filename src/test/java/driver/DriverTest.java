@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -108,6 +111,22 @@ public class DriverTest {
         } else {
             Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, address, "04-07-2002");
             assertEquals(testDriver.getAddress(), address);
+        }
+    }
+
+    //8. Testing incorrect birth dates
+    @ParameterizedTest()
+    @DisplayName("Testing valid and invalid Birth dates including edge cases")
+    @ValueSource(strings = {"04-04-2004", "000000", "abcd12", "123456", "12/31/2024", "2024/12/13", "abcdefgh", "@@-##-()()", ""})
+    void testInvalidBirthdates(String birthdate) {
+        if (!birthdate.equals("04-04-2004")) {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", birthdate);
+        });
+        assertEquals("Invalid driver details", exception.getMessage());
+        } else {
+            Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", birthdate);
+            assertEquals(testDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), birthdate);
         }
     }
 }
