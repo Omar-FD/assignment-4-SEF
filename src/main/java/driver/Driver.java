@@ -1,8 +1,6 @@
 package driver;
 
 import java.time.LocalDate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
     enum LICENSE_TYPES {
         LIGHT,
@@ -98,7 +96,7 @@ public class Driver {
     }
 
     private Boolean validFields(String driverID, String driverName, String experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
-        if ( licenseType == null) {
+        if (licenseType == null) {
             return  false;
         } else {
             System.out.println("valid name");
@@ -162,7 +160,13 @@ public class Driver {
     }
 
     public Boolean validExperience(String experience) {
-        return !experience.isEmpty();
+        int experienceYears = Integer.parseInt(experience);
+        return validExperience(experienceYears);
+    }
+    public Boolean validExperience(int experience) {
+        if (experience < 0) return false;
+        if (experience > 60) return false;
+        return true;
     }
 
     //Birthday Validation
