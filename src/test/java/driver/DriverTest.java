@@ -69,10 +69,10 @@ public class DriverTest {
     void testInvalidExperienceYears(int experienceYears) {
 
         if (experienceYears < 0) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Driver testDriver = new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
-        });
-        assertEquals("Invalid driver details", exception.getMessage());
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+                Driver testDriver = new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+            });
+            assertEquals("Invalid driver details", exception.getMessage());
         } else {
             Driver testDriver = new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             assertEquals(testDriver.getExperienceYears(), experienceYears);
@@ -92,6 +92,22 @@ public class DriverTest {
         } else {
             Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.valueOf(licenses), "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             assertEquals(testDriver.getLicenseType(), LICENSE_TYPES.valueOf(licenses));
+        }
+    }
+
+    //7. Testing invalid addresses including edge cases
+    @ParameterizedTest()
+    @DisplayName("Testing valid && invalid Addresses including edge cases")
+    @ValueSource(strings = {"", "                 ", "123123123123", "123 Main St", "123 | Main", "||||||||", "@@@@@@@@|#######", "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country"})
+    void testInvalidAddresses(String address) {
+        if (!address.equals("123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country")) {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, address, "04-07-2002");
+        });
+        assertEquals("Invalid driver details", exception.getMessage());
+        } else {
+            Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, address, "04-07-2002");
+            assertEquals(testDriver.getAddress(), address);
         }
     }
 }
