@@ -6,20 +6,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DriverTest {
-    //1. Tests for verifying details
+    //1. Testing driver creation
     @Test
-    @DisplayName("normal detail verification")
-    void verifyNormalDetails() {
+    @DisplayName("Testing driver creation")
+    void testDriverCreation() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
-        final Boolean result = testDriver.verifyLogin(testDriver.getDriverID(), testDriver.getBirthdate().toString());
-
-        assert result;
+        assertEquals("32##6785BR", testDriver.getDriverID());
+        assertEquals("John", testDriver.getDriverName());
+        assertEquals(10, testDriver.getExperienceYears());
+        assertEquals(LICENSE_TYPES.LIGHT, testDriver.getLicenseType());
+        assertEquals("123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", testDriver.getAddress());
     }
 
     //2. Testing missing parameters during instantiation
@@ -41,7 +44,7 @@ public class DriverTest {
     //3. Testing driver creation with incorrect ID's including edge cases
     @ParameterizedTest()
     @DisplayName("Testing invalid ID's during instantiation")
-    @ValueSource(strings = {"1234567890", "abcdefghij", "a1b2c3d4e5", "3#1@23325W", "----------", ""})
+    @ValueSource(strings = {"1234567890", "abcdefghij", "a1b2c3d4e5", "3#1@23325W", "----------", "123111231112311"})
     void testInvalidId(String id) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             Driver testDriver = new Driver(id, "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
@@ -128,5 +131,59 @@ public class DriverTest {
             Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", birthdate);
             assertEquals(testDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), birthdate);
         }
+    }
+    //9. Tests for verifying details
+    @Test
+    @DisplayName("normal detail verification")
+    void verifyNormalDetails() {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        final Boolean result = testDriver.verifyLogin(testDriver.getDriverID(), testDriver.getBirthdate().toString());
+
+        assert result;
+    }
+    //10. Testing for invalid detail verification
+    @ParameterizedTest
+    @DisplayName("invalid detail verification")
+    @CsvSource(textBlock =
+            """
+            " ", " "
+            "1234567890", "04-07-2002"
+            "abcdefgh", "1231123"
+            
+            """
+    )
+    void verifyInvalidDetails(String id, String birthdate) {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        final Boolean result = testDriver.verifyLogin("1234567890", "04-07-2002");
+        assert !result;
+    }
+    //11. Testing the address setter
+    @Test
+    @DisplayName("Testing the address setter")
+    void verifySetAddress() {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver replacementDriver = new Driver("41@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        testDriver.setAddress(replacementDriver.getAddress());
+        assertEquals("244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", testDriver.getAddress());
+    }
+
+    //12. Testing the birthdate setter
+    @Test
+    @DisplayName("Testing the birthdate setter")
+    void verifySetBirthdate() {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver replacementDriver = new Driver("41@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        testDriver.setBirthdate(LocalDate.parse(replacementDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        assertEquals("12-10-2004", testDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+    }
+
+    //13. Testing the experience years setter
+    @Test
+    @DisplayName("Testing the experience years setter")
+    void verifySetExperienceYears() {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver replacementDriver = new Driver("41@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        testDriver.setExperienceYears(replacementDriver.getExperienceYears());
+        assertEquals(5, testDriver.getExperienceYears());
     }
 }
