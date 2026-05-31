@@ -162,7 +162,7 @@ public class DriverTest {
     @DisplayName("Testing the address setter")
     void verifySetAddress() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
-        Driver replacementDriver = new Driver("41@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
         testDriver.setAddress(replacementDriver.getAddress());
         assertEquals("244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", testDriver.getAddress());
     }
@@ -172,7 +172,7 @@ public class DriverTest {
     @DisplayName("Testing the birthdate setter")
     void verifySetBirthdate() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
-        Driver replacementDriver = new Driver("41@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
         testDriver.setBirthdate(LocalDate.parse(replacementDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         assertEquals("12-10-2004", testDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
@@ -182,10 +182,28 @@ public class DriverTest {
     @DisplayName("Testing the experience years setter")
     void verifySetExperienceYears() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
-        Driver replacementDriver = new Driver("41@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
         testDriver.setExperienceYears(replacementDriver.getExperienceYears());
         assertEquals(5, testDriver.getExperienceYears());
     }
 
-    //14. Testing
+    //14. Testing the license type setter
+    @Test
+    @DisplayName("Testing the license type setter")
+    void verifySetLicenseType() {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
+        testDriver.setLicenseType(replacementDriver.getLicenseType());
+        assertEquals(LICENSE_TYPES.HEAVY, testDriver.getLicenseType());
+    }
+
+    //15. Testing the incorrect experience years
+    @Test
+    @DisplayName("Testing the incorrect experience years")
+    void verifySetIncorrectExperienceYears() {
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        assertThrows(IllegalArgumentException.class, () -> {
+            testDriver.setExperienceYears(70);
+        });
+    }
 }

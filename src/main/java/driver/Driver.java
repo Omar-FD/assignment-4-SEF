@@ -56,6 +56,7 @@ public class Driver {
     }
 
     public void setExperienceYears(int experienceYears) {
+        if (!validExperience(experienceYears)) return;
         this.experienceYears = experienceYears;
     }
 
@@ -82,7 +83,7 @@ public class Driver {
     }
 
     public void setBirthdate(LocalDate birthdate) {
-        if (!validBirthdate(birthdate.toString())) return;
+        if (!validBirthdate(birthdate)) return;
         this.birthdate = birthdate;
     }
 
@@ -165,8 +166,8 @@ public class Driver {
         return validExperience(experienceYears);
     }
     public Boolean validExperience(int experience) {
-        if (experience < 0) return false;
-        if (experience > 60) return false;
+        if (experience < 0) throw new IllegalArgumentException("Experience cannot be negative");
+        if (experience > 60) throw new IllegalArgumentException("Experience cannot exceed 60 years");
         return true;
     }
 
