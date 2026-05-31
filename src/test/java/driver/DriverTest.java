@@ -35,7 +35,7 @@ public class DriverTest {
             """)
     void testMissingParameters(String id, String name, String experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Driver testDriver = new Driver(id, name, experienceYears, licenseType, address, birthdate);
+            new Driver(id, name, experienceYears, licenseType, address, birthdate);
         });
         assertEquals("Invalid driver details", exception.getMessage());
     }
@@ -47,7 +47,7 @@ public class DriverTest {
     @ValueSource(strings = {"1234567890", "abcdefghij", "a1b2c3d4e5", "3#1@23325W", "----------", "123111231112311"})
     void testInvalidId(String id) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Driver testDriver = new Driver(id, "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+            new Driver(id, "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         });
         assertEquals("Invalid driver details", exception.getMessage());
     }
@@ -59,7 +59,7 @@ public class DriverTest {
     void testInvalidNames(String name) {
         if (!name.equals("John")) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-                Driver testDriver = new Driver("32##6785BR", name, 10, LICENSE_TYPES.HEAVY, "123 | Main St | Metropolis Downtown | Metropolis | Metropolit Country", "04-07-2002");
+                new Driver("32##6785BR", name, 10, LICENSE_TYPES.HEAVY, "123 | Main St | Metropolis Downtown | Metropolis | Metropolit Country", "04-07-2002");
             });
             assertEquals("Invalid driver details", exception.getMessage());
         } else {
@@ -76,7 +76,7 @@ public class DriverTest {
 
         if (experienceYears < 0) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-                Driver testDriver = new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+                new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             });
             assertEquals("Invalid driver details", exception.getMessage());
         } else {
@@ -92,7 +92,7 @@ public class DriverTest {
     void testInvalidLicenseTypes(String licenses) {
         if (!licenses.equals("LIGHT") && !licenses.equals("HEAVY") && !licenses.equals("MEDIUM") && !licenses.equals("PUBLIC_TRANSPORT")) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-                Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.valueOf(licenses), "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+                new Driver("32##6785BR", "John", 10, LICENSE_TYPES.valueOf(licenses), "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             });
             assertEquals("No enum constant driver.LICENSE_TYPES." + licenses, exception.getMessage());
         } else {
@@ -108,7 +108,7 @@ public class DriverTest {
     void testInvalidAddresses(String address) {
         if (!address.equals("123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country")) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, address, "04-07-2002");
+           new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, address, "04-07-2002");
         });
         assertEquals("Invalid driver details", exception.getMessage());
         } else {
@@ -124,7 +124,7 @@ public class DriverTest {
     void testInvalidBirthdates(String birthdate) {
         if (!birthdate.equals("04-04-2004")) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", birthdate);
+            new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", birthdate);
         });
         assertEquals("Invalid driver details", exception.getMessage());
         } else {
@@ -186,4 +186,6 @@ public class DriverTest {
         testDriver.setExperienceYears(replacementDriver.getExperienceYears());
         assertEquals(5, testDriver.getExperienceYears());
     }
+
+    //14. Testing
 }
