@@ -73,7 +73,7 @@ public class DriverTest {
     @ValueSource(ints = {0, 11, 100, 24, -1})
     void testInvalidExperienceYears(int experienceYears) {
 
-        if (experienceYears < 0 && experienceYears > 60) {
+        if (experienceYears < 0 || experienceYears > 60) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
                 new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             });
