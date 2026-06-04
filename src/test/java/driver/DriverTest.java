@@ -205,9 +205,9 @@ public class DriverTest {
     @Test
     @DisplayName("Testing the incorrect experience years")
     void verifySetIncorrectExperienceYears() {
-        Driver testDriver = new Driver("32##6785BR", "John", 70, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         assertThrows(IllegalArgumentException.class, () -> {
-            testDriver.setExperienceYears(70);
+            testDriver.setExperienceYears(65);
         });
     }
 }
