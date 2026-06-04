@@ -101,9 +101,10 @@ public class Driver {
         if (licenseType == null) {
             return  false;
         } else {
-            System.out.println("valid name");
-        };
-        return validID(driverID) && validBirthdate(birthdate) && validAddress(address) && validExperience(experienceYears) && validName(driverName);
+         Boolean isValid = validID(driverID) && validBirthdate(birthdate) && validAddress(address) && validExperience(experienceYears) && validName(driverName);
+            System.out.println("valid details");
+            return isValid;
+        }
     }
 
     public Boolean validName(String driverName) {

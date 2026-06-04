@@ -117,7 +117,7 @@ public class DriverTest {
         }
     }
 
-    //8. Testing incorrect birth dates
+    //8. Testing valid & invalid birth dates
     @ParameterizedTest()
     @DisplayName("Testing valid and invalid Birth dates including edge cases")
     @ValueSource(strings = {"04-04-2004", "000000", "abcd12", "123456", "12/31/2024", "2024/12/13", "abcdefgh", "@@-##-()()", ""})
@@ -137,7 +137,7 @@ public class DriverTest {
     @DisplayName("normal detail verification")
     void verifyNormalDetails() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
-        final Boolean result = testDriver.verifyLogin(testDriver.getDriverID(), testDriver.getBirthdate().toString());
+        final boolean result = testDriver.verifyLogin(testDriver.getDriverID(), testDriver.getBirthdate().toString());
 
         assert result;
     }
@@ -159,7 +159,7 @@ public class DriverTest {
     }
     //11. Testing the address setter
     @Test
-    @DisplayName("Testing the address setter")
+    @DisplayName("Testing the address setter and getter")
     void verifySetAddress() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
@@ -169,7 +169,7 @@ public class DriverTest {
 
     //12. Testing the birthdate setter
     @Test
-    @DisplayName("Testing the birthdate setter")
+    @DisplayName("Testing the birthdate setter and getter")
     void verifySetBirthdate() {
         Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
