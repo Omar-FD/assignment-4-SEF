@@ -1,8 +1,13 @@
 
 package bus;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -16,7 +21,12 @@ public class BusIntegrationTest {
     
   
      //IT-B01: Add a valid bus and verify it can be retrieved from the TXT file.
-   
+    @BeforeEach
+    void setUp() throws IOException {
+        // Delete the file before each test so we start fresh
+        Files.deleteIfExists(Paths.get("data/busData.txt"));
+    }
+
     @Test
     @Order(1)
     void ValidBusesStoredCorrectly() {
