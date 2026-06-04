@@ -85,4 +85,7 @@ public class Bus {
 
         return true; // passed all applicable rules
     }
+    public boolean permittedToDrive(Driver driver) {
+        return canBeDrivenBy(driver);
+    }
 }
