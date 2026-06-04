@@ -1,5 +1,8 @@
 package bus;
 
+import driver.Driver;
+import driver.LICENSE_TYPES;
+
 import java.time.LocalDate;
 import java.time.Period;
 

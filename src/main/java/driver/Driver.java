@@ -3,12 +3,6 @@ package driver;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-enum LICENSE_TYPES {
-        LIGHT,
-        MEDIUM,
-        HEAVY,
-        PUBLIC_TRANSPORT,
-    }
 public class Driver {
 
     private final String driverID;

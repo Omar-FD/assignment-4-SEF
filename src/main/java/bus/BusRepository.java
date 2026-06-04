@@ -1,7 +1,7 @@
 package bus;
 import java.util.ArrayList;
 
-import driver.Bus;
+import bus.Bus;
 
 public class BusRepository {
 
