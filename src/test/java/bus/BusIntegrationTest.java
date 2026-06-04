@@ -20,7 +20,7 @@ public class BusIntegrationTest {
 
     
   
-     //IT-B01: Add a valid bus and verify it can be retrieved from the TXT file.
+     //Add a valid bus and verify it can be retrieved from the TXT file.
     @BeforeEach
     void setUp() throws IOException {
         // Delete the file before each test so we start fresh
@@ -44,7 +44,7 @@ public class BusIntegrationTest {
 
 
 
-    //IT-B02: Add multiple valid buses and confirm all are persisted.
+    //Add multiple valid buses and confirm all are persisted.
     @Test
     @Order(2)
     void InvalidBusesAreRejected() {
@@ -69,7 +69,7 @@ public class BusIntegrationTest {
 
 
 
-     //IT-B03: Attempt to add a bus with a duplicate busID – must be rejected.
+     //Attempt to add a bus with a duplicate busID – must be rejected.
    
     @Test
     @Order(3)
@@ -97,7 +97,7 @@ public class BusIntegrationTest {
 
 
 
-    //IT-B08: Count starts at 0, increments with each valid add,
+    //Count starts at 0, increments with each valid add,
    
     @Test
     @Order(6)
