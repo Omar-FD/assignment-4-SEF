@@ -46,7 +46,7 @@ public class DriverTest {
     @ValueSource(strings = {"1234567890", "abcdefghij", "a1b2c3d4e5", "3#1@23325W", "----------", "123111231112311"})
     void testInvalidId(String id) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Driver(id, "Jacob", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+            new Driver(id, "Mark", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         });
         assertEquals("Invalid driver details", exception.getMessage());
     }
