@@ -175,7 +175,7 @@ public class DriverTest {
     @Test
     @DisplayName("Testing the birthdate setter and getter")
     void verifySetBirthdate() {
-        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver testDriver = new Driver("32##6785BR", "Jacob", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         Driver replacementDriver = new Driver("44@#6905TT", "James", 5, LICENSE_TYPES.HEAVY, "244 | High St | Metropolis Suburb | Metropolian | Metropolian Country", "12-10-2004");
         testDriver.setBirthdate(LocalDate.parse(replacementDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         assertEquals("12-10-2004", testDriver.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
