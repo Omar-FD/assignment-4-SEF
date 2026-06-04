@@ -8,10 +8,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import bus.Bus;
-
-
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BusIntegrationTest {
 

@@ -87,8 +87,8 @@ public class Driver {
 
     //checking all the fields
     private Boolean validFields(String driverID, String driverName, int experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {
-        if (!validName(driverName) || experienceYears < 0 || licenseType == null) return false;
-        return validID(driverID) && validBirthdate(birthdate) && validAddress(address);
+        if (!validName(driverName) || licenseType == null) return false;
+        return validID(driverID) && validBirthdate(birthdate) && validAddress(address) && validExperience(experienceYears);
     }
 
     private Boolean validFields(String driverID, String driverName, String experienceYears, LICENSE_TYPES licenseType, String address, String birthdate) {

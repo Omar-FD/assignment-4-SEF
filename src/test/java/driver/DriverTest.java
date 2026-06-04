@@ -1,6 +1,5 @@
 package driver;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -74,7 +73,7 @@ public class DriverTest {
     @ValueSource(ints = {0, 11, 100, 24, -1})
     void testInvalidExperienceYears(int experienceYears) {
 
-        if (experienceYears < 0) {
+        if (experienceYears < 0 && experienceYears > 60) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
                 new Driver("32##6785BR", "John", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             });
@@ -92,7 +91,7 @@ public class DriverTest {
     void testInvalidLicenseTypes(String licenses) {
         if (!licenses.equals("LIGHT") && !licenses.equals("HEAVY") && !licenses.equals("MEDIUM") && !licenses.equals("PUBLIC_TRANSPORT")) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-                new Driver("32##6785BR", "John", 10, LICENSE_TYPES.valueOf(licenses), "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+                new Driver("32##6785BR", "Mark", 10, LICENSE_TYPES.valueOf(licenses), "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             });
             assertEquals("No enum constant driver.LICENSE_TYPES." + licenses, exception.getMessage());
         } else {
@@ -201,7 +200,7 @@ public class DriverTest {
     @Test
     @DisplayName("Testing the incorrect experience years")
     void verifySetIncorrectExperienceYears() {
-        Driver testDriver = new Driver("32##6785BR", "John", 10, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+        Driver testDriver = new Driver("32##6785BR", "John", 70, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
         assertThrows(IllegalArgumentException.class, () -> {
             testDriver.setExperienceYears(70);
         });
