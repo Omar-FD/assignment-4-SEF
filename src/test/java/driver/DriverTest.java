@@ -75,7 +75,7 @@ public class DriverTest {
 
         if (experienceYears < 0) {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-                new Driver("32##6785BR", "Mark", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
+                new Driver("32##6785BR", "Jacob", experienceYears, LICENSE_TYPES.LIGHT, "123 | Main St | Metropolis Downtown | Metropolis | Metropolitan Country", "04-07-2002");
             });
             assertEquals("Experience cannot be negative", exception.getMessage());
         } else if (experienceYears > 60) {
